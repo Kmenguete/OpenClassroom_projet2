@@ -13,7 +13,7 @@ def get_books_for_category(url):
 
     for web in soup.find('ul', class_='nav nav-list').find('li').find('ul').find_all('li'):
         href = web.a.get('href')
-        # url = "https://books.toscrape.com/{}".format(href)
+        url = "https://books.toscrape.com/{}".format(href)
         # time.sleep(3)
         response = requests.get(url)
         if response.ok:
