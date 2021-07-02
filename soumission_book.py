@@ -17,6 +17,7 @@ print(soup.find_all('tr')[5].get_text())
 print(soup.find_all('a')[3].get_text())
 print(soup.find_all('tr')[6].get_text())
 print(soup.find_all('img')[0])
+
 import csv
 with open('P2_01_codesource.csv', 'w', newline='') as file:
     writer = csv.writer(file)
