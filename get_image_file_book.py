@@ -2,14 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-page = requests.get("https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html")
-soup = BeautifulSoup(page.content, 'html.parser')
-image = str(soup.find('img'))
-image_link = image.replace('<img alt="A Light in the Attic" src="../..', '')
-final_link = 'https://books.toscrape.com' + image_link
-print(final_link)
-
-
 def get_image_file_book():
     main_page = 'https://books.toscrape.com/index.html'
     response = requests.get(main_page)
@@ -33,7 +25,8 @@ def get_image_file_book():
                         image1 = str(soup3.find('img'))
                         alt = soup3.find('img').get('alt')
                         image_link1 = image1.replace('<img alt="{}" src="../..'.format(alt), '')
-                        final_link1 = 'https://books.toscrape.com' + image_link1
+                        image_link2 = str(image_link1).replace('"/>', '')
+                        final_link1 = 'https://books.toscrape.com' + image_link2
                         print(final_link1)
 
 
