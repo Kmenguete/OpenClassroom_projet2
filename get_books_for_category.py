@@ -16,8 +16,7 @@ def get_books_for_category(url):
             book_link = str(links).replace("../../..", "")
             print(book_link)
             book_info = book_extract_information(book_link)
-            category_url_list = url.split("/")
-            store_book_information(category_url_list[len(category_url_list)-2], book_info)
+            store_book_information(book_info)
 
 
 get_books_for_category("https://books.toscrape.com/catalogue/category/books/travel_2/index.html")

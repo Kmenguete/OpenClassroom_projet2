@@ -4,12 +4,16 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def store_book_information(category_name, book_information_as_list):
+def store_book_information(book_information_as_list):
     converted_list = [str(element) for element in book_information_as_list]
-
+    category_name = book_information_as_list[8]  # Category is index 8 in book_information_as_list
     book_information_as_string = "|".join(converted_list).replace("\n", "")
     print(book_information_as_string)
-    with open('books/{}.csv'.format(category_name), 'a', encoding='utf-8') as file:
+    directory = 'books/{}'.format(category_name)
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    with open('{}/{}.csv'.format(directory, category_name), 'a', encoding='utf-8') as file:
         file.write("\n")
         file.write(f'{book_information_as_string}\n')
 
@@ -35,7 +39,7 @@ def book_extract_information(url):
     image_link1 = str(image_url).replace('<img alt="{}" src="../..'.format(title.replace('&', '&amp;')), '')
     image_link2 = str(image_link1).replace('"/>', '')
     image_url = "https://books.toscrape.com" + image_link2
-    directory = 'books/{}'.format(category)
+    directory = 'books/{}/images'.format(category)
 
     if not os.path.exists(directory):
         os.makedirs(directory)
