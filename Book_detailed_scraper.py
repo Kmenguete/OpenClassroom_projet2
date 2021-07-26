@@ -35,7 +35,6 @@ def book_extract_information(url):
     image_link1 = str(image_url).replace('<img alt="{}" src="../..'.format(title.replace('&', '&amp;')), '')
     image_link2 = str(image_link1).replace('"/>', '')
     image_url = "https://books.toscrape.com" + image_link2
-    print(image_url)
     directory = 'books/{}'.format(category)
 
     if not os.path.exists(directory):
