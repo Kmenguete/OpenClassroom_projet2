@@ -44,7 +44,7 @@ def book_extract_information(url):
     if not os.path.exists(directory):
         os.makedirs(directory)
     response = requests.get(image_url)
-    file = open("{}/{}.jpg".format(directory, title), "wb")
+    file = open("{}/{}.jpg".format(directory, title.replace('/', '_')), "wb")
     file.write(response.content)
     file.close()
     book_information_as_list = [product_page_url, universal_product_code, title, price_including_tax,
