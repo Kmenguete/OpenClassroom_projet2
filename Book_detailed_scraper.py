@@ -36,7 +36,7 @@ def book_extract_information(url):
     category = soup.find_all('a')[3].get_text()
     review_rating = soup.find_all('tr')[6].get_text()
     image_url = soup.find_all('img')[0]
-    image_link1 = str(image_url).replace('<img alt="{}" src="../..'.format(title.replace('&', '&amp;')), '')
+    image_link1 = str(image_url).replace('<img alt="{}" src="../..'.format(title.replace('&', '&amp;').replace('"', '&quot;')), '')
     image_link2 = str(image_link1).replace('"/>', '')
     image_url = "https://books.toscrape.com" + image_link2
     directory = 'books/{}/images'.format(category)
