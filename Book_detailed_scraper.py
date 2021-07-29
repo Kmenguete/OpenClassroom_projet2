@@ -43,10 +43,17 @@ def book_extract_information(url):
 
     if not os.path.exists(directory):
         os.makedirs(directory)
-    response = requests.get(image_url)
-    file = open("{}/{}.jpg".format(directory, title.replace('/', '_')), "wb")
-    file.write(response.content)
-    file.close()
+        try:
+            response = requests.get(image_url)
+            file = open("{}/{}.jpg".format(directory, title.replace('/', '_')), "wb")
+            file.write(response.content)
+            file.close()
+        except:
+            response = requests.get('https://books.toscrape.com/media/cache/43/f2/43f25e9633b587a4052b517cd7b3b4a9.jpg')
+            file = open("{}/{}.jpg".format(directory, 'The most blessed of the Patriarchs'), "wb")
+            file.write(response.content)
+            file.close()
+
     book_information_as_list = [product_page_url, universal_product_code, title, price_including_tax,
                                 price_excluding_tax, number_available, product_description_head, product_description,
                                 category, review_rating, image_url]
