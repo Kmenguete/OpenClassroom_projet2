@@ -3,6 +3,11 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
+# The goal of the Book_detailed_scraper file is to get book information and image file of one book. On this file,
+# we took the book 'A light in the attic' as an example. The file consist of two functions: the def store_book_information
+# function and the def book_extract_information function. def store_book_information is a function that store book
+# information into a csv file. The goal is to get one csv file per category with their corresponding book information.
+
 
 def store_book_information(book_information_as_list):
     converted_list = [str(element) for element in book_information_as_list]
@@ -16,6 +21,13 @@ def store_book_information(book_information_as_list):
     with open('{}/{}.csv'.format(directory, category_name), 'a', encoding='utf-8') as file:
         file.write("\n")
         file.write(f'{book_information_as_string}\n')
+
+# the purpose of the def book_extract_information function is to extract book information from the html content of
+# web pages. This function also create a directory that organize the structure of our folders and files. In this structure,
+# we want to have a folder named books that will store one folder per category(with their corresponding categories as name).
+# Inside the category folder we have a csv file which contain all book information of the corresponding category.
+# Inside the category folder, we have also an other folder named images that contain the image file of every book of
+# the corresponding category.
 
 
 def book_extract_information(url):

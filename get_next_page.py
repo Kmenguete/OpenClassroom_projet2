@@ -3,6 +3,12 @@ from bs4 import BeautifulSoup
 from get_books_for_category import get_books_for_category
 
 
+# The get_next_page function has the purpose to get book information and their corresponding image file for categories
+# with more than one page. However, the get_next_page file return only categories with more than one page. In the
+# get_next_page function, we called get_books_for_category function that let us to get all book information data and
+# their corresponding image file.
+
+
 def get_next_page():
     page = requests.get("http://books.toscrape.com/")  # I am downloading a web page using requests
     soup = BeautifulSoup(page.content,
