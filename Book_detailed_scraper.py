@@ -4,9 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 
 # The goal of the Book_detailed_scraper file is to get book information and image file of one book. On this file,
-# we took the book 'A light in the attic' as an example. The file consist of two functions: the def store_book_information
-# function and the def book_extract_information function. def store_book_information is a function that store book
-# information into a csv file. The goal is to get one csv file per category with their corresponding book information.
+# we took the book 'A light in the attic' as an example. The file consist of two functions: the
+# def store_book_information function and the def book_extract_information function. def store_book_information is a
+# function that store book information into a csv file. The goal is to get one csv file per category with their
+# corresponding book information.
 
 
 def store_book_information(book_information_as_list):
@@ -23,11 +24,11 @@ def store_book_information(book_information_as_list):
         file.write(f'{book_information_as_string}\n')
 
 # the purpose of the def book_extract_information function is to extract book information from the html content of
-# web pages. This function also create a directory that organize the structure of our folders and files. In this structure,
-# we want to have a folder named books that will store one folder per category(with their corresponding categories as name).
-# Inside the category folder we have a csv file which contain all book information of the corresponding category.
-# Inside the category folder, we have also an other folder named images that contain the image file of every book of
-# the corresponding category.
+# web pages. This function also create a directory that organize the structure of our folders and files. In this
+# structure, we want to have a folder named books that will store one folder per category
+# (with their corresponding categories as name). Inside the category folder we have a csv file which contain all
+# book information of the corresponding category. Inside the category folder, we have also an other folder named
+# images that contain the image file of every book of the corresponding category.
 
 
 def book_extract_information(url):
@@ -47,21 +48,21 @@ def book_extract_information(url):
     product_description = soup.find_all('p')[3].get_text()
     category = soup.find_all('a')[3].get_text()
     review_rating = soup.find_all('tr')[6].get_text()
-    image_url = soup.find_all('img')[0]
-    image_link1 = str(image_url).replace('<img alt="{}" src="../..'.format(title.replace('&', '&amp;').replace('"', '&quot;')), '')
-    image_link2 = str(image_link1).replace('"/>', '')
-    image_url = "https://books.toscrape.com" + image_link2
+    img = soup.find_all('img')[0]
+    part_image_url = img['src'].replace("../..", "")
+    print("URL ========> {}".format(part_image_url))
+    full_image_url = "https://books.toscrape.com" + part_image_url
     directory = 'books/{}/images'.format(category)
 
     if not os.path.exists(directory):
         os.makedirs(directory)
-    response = requests.get(image_url)
+    response = requests.get(full_image_url)
     file = open("{}/{}.jpg".format(directory, title.replace('/', '_')), "wb")
     file.write(response.content)
     file.close()
     book_information_as_list = [product_page_url, universal_product_code, title, price_including_tax,
                                 price_excluding_tax, number_available, product_description_head, product_description,
-                                category, review_rating, image_url]
+                                category, review_rating, full_image_url]
     return book_information_as_list
 
 
